@@ -5,7 +5,8 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 ## Usage
 
 1. `Cloner le répertoire avec git clone https://github.com/saundersp/ToolboxModule.git`
-2. `Utilisez require('../ToolboxModule') dans votre projet NodeJS`
+2. `Pour NodeJS : Utilisez require('../ToolboxModule')`
+3. `Pour navigateur : Mettre <script src="toolbox.min.js"></script> dans le head`
 
 ## Documentation des fonctions
 
