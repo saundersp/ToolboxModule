@@ -1,4 +1,5 @@
 # ToolboxModule
+
 Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets divers, est également utilisable en navigateur
 
 ## Usage
@@ -365,7 +366,6 @@ cleanup(_ => {
 const inf = parseUrl('localhost/test?vues=joker');
 inf //? => { link: 'localhost', dir: 'test', params: { ['joker'], length: 1}}
 ```
-
 
 ## License
 
