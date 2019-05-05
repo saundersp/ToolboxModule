@@ -19,7 +19,7 @@ class Player {
 //...
     move(ms){
         //...
-        const tempVelX = calcVelocityFromDelta(ms, this.speedX);
+        const tempVelX = calcSpeedFromDelta(ms, this.speedX);
         this.x += tempVelX;
         //...
     }
@@ -116,13 +116,13 @@ class Player {
 #### Contraint la valeur n à être dans l'intervalle [min, max]
 
 ```javascript
-vY //? => 40
+let vY = 40;
 
 vY = constrain(vY, -20, 30);
 
-//...
+vY //? => 30
 
-vY //? => -57
+vY = -57;
 
 vY = constrain(vY, -20, 30);
 
@@ -138,45 +138,25 @@ vY //? => -20
 ```javascript
 // binding key events
 const keyInput = trackKeys([
-	//Moving sideways
-	"ArrowLeft", "KeyA",
-	"ArrowRight", "KeyD",
-	//Jumping
-	"ArrowUp", "KeyW"
+    //Moving sideways
+    "ArrowLeft", "KeyA",
+    "ArrowRight", "KeyD",
+    //Jumping
+    "ArrowUp", "KeyW"
 ]);
 
 //...
+//If key ArrowUp is pressed
+if(keyInput.ArrowUp){
+    //Do jumping...
+}
 
-//Usage in loop
+if(keyInput.ArrowLeft){
+    //Do move left...
+}
 
-class Player {
-//...
-    move(ms, keyInput){
-        //...
-
-        //If key ArrowUp is pressed
-        if(keyInput.ArrowUp){
-            this.jumping = true;
-            this.speedY = -this.jumpHeight;  
-        }
-
-        //...
-
-        if(keyInput.ArrowLeft){
-            speedX += -this.speedX;
-            this.direction = direction.LEFT;
-            this.changeState(state.RUNNING);
-        }
-
-        if(keyInput.ArrowRight){
-            speedX += this.speedX;
-            this.direction = direction.RIGHT;
-            this.changeState(state.RUNNING);
-        }
-
-        //..
-    }
-//...
+if(keyInput.ArrowRight){
+    //Do move right...
 }
 ```
 
@@ -216,8 +196,6 @@ let tab = [ /* elements... */];
 tab[i] //? => 3;
 //...
 removeFromArray(tab, 3);
-//...
-tab[i] //? => undefined
 ```
 
 ### generateArray(...size)
@@ -382,8 +360,8 @@ cleanup(_ => {
 #### Permet de récupère les informations d'une url
 
 ```javascript
-const inf = parseUrl('localhost/test?vues=joker');
-inf //? => { link: 'localhost', dir: 'test', params: { ['joker'], length: 1}}
+const inf = parseUrl('localhost/test?vues=joker&help=batman');
+inf //? => { link: 'localhost', dir: 'test', params: { vues: 'joker', help: 'batman', length: 2 }}
 ```
 
 ## License
