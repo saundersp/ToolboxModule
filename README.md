@@ -27,7 +27,7 @@ class Player {
 }
 ```
 
-### collisionX(object1, object2) || collisionX(object[], object2)
+### collisionX(object1, object2) || collisionX(object1, object[])
 
 #### Vérifie la collision entre deux objets sur l'axe horizontale X
 
@@ -55,7 +55,7 @@ class Player {
 }
 ```
 
-### collisionY(object1, object2) || collisionY(object[], object2)
+### collisionY(object1, object2) || collisionY(object1, object[])
 
 #### Vérifie la collision entre deux objets sur l'axe vertical Y
 
@@ -83,7 +83,7 @@ class Player {
 }
 ```
 
-### collision(object1, object2) || collision(object[], object2)
+### collision(object1, object2) || collision(object1, object[])
 
 #### Vérifie la collision entre deux objets
 

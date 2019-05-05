@@ -15,20 +15,18 @@
 
 	exports.collisionX = (o1, o2) => {
 		if (o2.some) return o2.some(obj => collisionX(o1, obj));
-		if (o1.x > o2.x + o2.w || o1.x + o1.w < o2.x) return false;
-		return true;
+		else return (!(o1.x > o2.x + o2.w || o1.x + o1.w < o2.x));
 	};
 
 	exports.collisionY = (o1, o2) => {
 		if (o2.some) return o2.some(obj => collisionY(o1, obj));
-		if (o1.y > o2.y + o2.h || o1.y + o1.h < o2.y) return false;
-		return true;
+		else return (!(o1.y > o2.y + o2.h || o1.y + o1.h < o2.y));
 	};
 
-	exports.collision = (o1, o2) =>
-		o2.some ?
-		o2.some(o => collision(o1, o)) :
-		collisionX(o1, o2) && collisionY(o1, o2);
+	exports.collision = (o1, o2) => {
+		if (o2.some) return o2.some(o => collision(o1, o));
+		else return collisionX(o1, o2) && collisionY(o1, o2);
+	};
 
 	exports.constrain = (n, min, max) => n < min ? min : n > max ? max : n;
 
