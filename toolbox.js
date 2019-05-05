@@ -4,7 +4,10 @@
 		isScript = true;
 		exports = {};
 	}
-	const { log, error } = console;
+	const {
+		log,
+		error
+	} = console;
 	exports.log = log;
 	exports.error = error;
 
@@ -23,9 +26,11 @@
 	};
 
 	exports.collision = (o1, o2) =>
-		o2.some
-			? o2.some(o => collision(o1, o))
-			: collisionX(o1, o2) && collisionY(o1, o2);
+		o2.some ?
+		o2.some(o => collision(o1, o)) :
+		collisionX(o1, o2) && collisionY(o1, o2);
+
+	exports.constrain = (n, min, max) => n < min ? min : n > max ? max : n;
 
 	exports.trackKeys = k => {
 		const d = {};
@@ -143,9 +148,7 @@
 		(d[_ >> 5] |= 128 << _ % 32), (d[14 + (((_ + 64) >>> 9) << 4)] = _);
 
 		for (
-			var m = 1732584193, f = -271733879, r = -1732584194, i = 271733878, n = 0;
-			n < d.length;
-			n += 16
+			var m = 1732584193, f = -271733879, r = -1732584194, i = 271733878, n = 0; n < d.length; n += 16
 		) {
 			var h = m,
 				t = f,
@@ -585,10 +588,10 @@
 				21,
 				-343485551
 			)),
-				(m = safe_add(m, h)),
-				(f = safe_add(f, t)),
-				(r = safe_add(r, g)),
-				(i = safe_add(i, e));
+			(m = safe_add(m, h)),
+			(f = safe_add(f, t)),
+			(r = safe_add(r, g)),
+			(i = safe_add(i, e));
 		}
 		return Array(m, f, r, i);
 	}
@@ -751,7 +754,12 @@
 		const dir = url.split("/");
 		dir.shift();
 		const q = dir[dir.length - 1].split("?"),
-			r = { dir: dir, params: { length: 0 } };
+			r = {
+				dir: dir,
+				params: {
+					length: 0
+				}
+			};
 		if (q.length > 1) {
 			q[1].split("&").forEach(item => {
 				const obj = item.split("=");

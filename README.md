@@ -111,6 +111,24 @@ class Player {
 }
 ```
 
+### constrain(n, min, max)
+
+#### Contraint la valeur n à être dans l'intervalle [min, max]
+
+```javascript
+vY //? => 40
+
+vY = constrain(vY, -20, 30);
+
+//...
+
+vY //? => -57
+
+vY = constrain(vY, -20, 30);
+
+vY //? => -20
+```
+
 ### trackKeys(keys[])
 
 #### Renvoie un tableau des touches pressées à chaque moment
