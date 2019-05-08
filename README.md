@@ -298,6 +298,19 @@ log("Some amazing text !");
 error("Something wrong...");
 ```
 
+### Fonctions Maths
+
+#### Wrapper de diverses fonctions de Math
+
+```javascript
+max(0, 5, 2); //? => 5
+min(0, 5, 2); //? => 0
+pow(2, 3);    //? => 8
+floor(2.635); //? => 2
+ceil(2.443);  //? => 3
+abs(-23);     //? => 23
+```
+
 ### ask(Options)
 
 #### Wrapper d'une requête XHR
@@ -328,7 +341,7 @@ ask(opt)
 #### Mini JQuery n'incluant que certaines fonctions
 
 ```javascript
-const h1 = $("h1#myH1");
+const h1 = $("h1#myH1")[0];
 
 h1.css('color', 'red');
 h1.html("<div>Hello there !</div>");

@@ -1,15 +1,13 @@
-(_ => {
-	let isScript = false;
-	if (typeof exports == "undefined") {
-		isScript = true;
-		exports = {};
-	}
-	const {
-		log,
-		error
-	} = console;
-	exports.log = log;
-	exports.error = error;
+(exports => {
+	exports.log = console.log;
+	exports.error = console.error;
+
+	exports.max = Math.max;
+	exports.min = Math.min;
+	exports.pow = Math.pow;
+	exports.floor = Math.floor;
+	exports.ceil = Math.ceil;
+	exports.abs = Math.abs;
 
 	exports.calcSpeedFromDelta = (d, s) => (s * d) / 1e3;
 
@@ -32,14 +30,14 @@
 
 	exports.trackKeys = k => {
 		const d = {};
-		const h = e => {
+		const h = (e, val) => {
 			if (k.includes(e.code)) {
-				d[e.code] = e.type === "keydown";
+				d[e.code] = val;
 				e.preventDefault();
 			}
 		};
-		document.onkeydown = h;
-		document.onkeyup = h;
+		document.onkeydown = e => h(e, true);
+		document.onkeyup = e => h(e, false);
 		return d;
 	};
 
@@ -110,517 +108,158 @@
 		return `${y}-${m}-${d} ${t}`;
 	};
 
-	exports.MD5 = d => M(V(Y(X(d), 8 * d.length))).toLowerCase();
+	exports.MD5 = s => hex(md51(s));
 
-	function M(d) {
-		let n,
-			m = "0123456789ABCDEF",
-			f = "";
+	function md5cycle(x, k) {
+		let a = x[0],
+			b = x[1],
+			c = x[2],
+			d = x[3];
 
-		for (let i = 0; i < d.length; i++) n = d.charCodeAt(r);
+		a = ff(a, b, c, d, k[0], 7, -680876936);
+		d = ff(d, a, b, c, k[1], 12, -389564586);
+		c = ff(c, d, a, b, k[2], 17, 606105819);
+		b = ff(b, c, d, a, k[3], 22, -1044525330);
+		a = ff(a, b, c, d, k[4], 7, -176418897);
+		d = ff(d, a, b, c, k[5], 12, 1200080426);
+		c = ff(c, d, a, b, k[6], 17, -1473231341);
+		b = ff(b, c, d, a, k[7], 22, -45705983);
+		a = ff(a, b, c, d, k[8], 7, 1770035416);
+		d = ff(d, a, b, c, k[9], 12, -1958414417);
+		c = ff(c, d, a, b, k[10], 17, -42063);
+		b = ff(b, c, d, a, k[11], 22, -1990404162);
+		a = ff(a, b, c, d, k[12], 7, 1804603682);
+		d = ff(d, a, b, c, k[13], 12, -40341101);
+		c = ff(c, d, a, b, k[14], 17, -1502002290);
+		b = ff(b, c, d, a, k[15], 22, 1236535329);
 
-		return f + m.charAt((n >>> 4) & 15) + m.charAt(15 & n);
+		a = gg(a, b, c, d, k[1], 5, -165796510);
+		d = gg(d, a, b, c, k[6], 9, -1069501632);
+		c = gg(c, d, a, b, k[11], 14, 643717713);
+		b = gg(b, c, d, a, k[0], 20, -373897302);
+		a = gg(a, b, c, d, k[5], 5, -701558691);
+		d = gg(d, a, b, c, k[10], 9, 38016083);
+		c = gg(c, d, a, b, k[15], 14, -660478335);
+		b = gg(b, c, d, a, k[4], 20, -405537848);
+		a = gg(a, b, c, d, k[9], 5, 568446438);
+		d = gg(d, a, b, c, k[14], 9, -1019803690);
+		c = gg(c, d, a, b, k[3], 14, -187363961);
+		b = gg(b, c, d, a, k[8], 20, 1163531501);
+		a = gg(a, b, c, d, k[13], 5, -1444681467);
+		d = gg(d, a, b, c, k[2], 9, -51403784);
+		c = gg(c, d, a, b, k[7], 14, 1735328473);
+		b = gg(b, c, d, a, k[12], 20, -1926607734);
+
+		a = hh(a, b, c, d, k[5], 4, -378558);
+		d = hh(d, a, b, c, k[8], 11, -2022574463);
+		c = hh(c, d, a, b, k[11], 16, 1839030562);
+		b = hh(b, c, d, a, k[14], 23, -35309556);
+		a = hh(a, b, c, d, k[1], 4, -1530992060);
+		d = hh(d, a, b, c, k[4], 11, 1272893353);
+		c = hh(c, d, a, b, k[7], 16, -155497632);
+		b = hh(b, c, d, a, k[10], 23, -1094730640);
+		a = hh(a, b, c, d, k[13], 4, 681279174);
+		d = hh(d, a, b, c, k[0], 11, -358537222);
+		c = hh(c, d, a, b, k[3], 16, -722521979);
+		b = hh(b, c, d, a, k[6], 23, 76029189);
+		a = hh(a, b, c, d, k[9], 4, -640364487);
+		d = hh(d, a, b, c, k[12], 11, -421815835);
+		c = hh(c, d, a, b, k[15], 16, 530742520);
+		b = hh(b, c, d, a, k[2], 23, -995338651);
+
+		a = ii(a, b, c, d, k[0], 6, -198630844);
+		d = ii(d, a, b, c, k[7], 10, 1126891415);
+		c = ii(c, d, a, b, k[14], 15, -1416354905);
+		b = ii(b, c, d, a, k[5], 21, -57434055);
+		a = ii(a, b, c, d, k[12], 6, 1700485571);
+		d = ii(d, a, b, c, k[3], 10, -1894986606);
+		c = ii(c, d, a, b, k[10], 15, -1051523);
+		b = ii(b, c, d, a, k[1], 21, -2054922799);
+		a = ii(a, b, c, d, k[8], 6, 1873313359);
+		d = ii(d, a, b, c, k[15], 10, -30611744);
+		c = ii(c, d, a, b, k[6], 15, -1560198380);
+		b = ii(b, c, d, a, k[13], 21, 1309151649);
+		a = ii(a, b, c, d, k[4], 6, -145523070);
+		d = ii(d, a, b, c, k[11], 10, -1120210379);
+		c = ii(c, d, a, b, k[2], 15, 718787259);
+		b = ii(b, c, d, a, k[9], 21, -343485551);
+
+		x[0] = add32(a, x[0]);
+		x[1] = add32(b, x[1]);
+		x[2] = add32(c, x[2]);
+		x[3] = add32(d, x[3]);
 	}
 
-	function X(d) {
-		let n = Array(d.length >> 2);
-
-		for (let i = 0; i < n.length; i++) n[i] = 0;
-
-		for (let i = 0; i < 8 * d.length; i += 8)
-			n[i >> 5] |= (255 & d.charCodeAt(i / 8)) << i % 32;
-
-		return n;
+	function cmn(q, a, b, x, s, t) {
+		a = add32(add32(a, q), add32(x, t));
+		return add32((a << s) | (a >>> (32 - s)), b);
 	}
 
-	function V(d) {
-		let n = "";
-
-		for (let m = 0; m < 32 * d.length; m += 8)
-			n += String.fromCharCode((d[m >> 5] >>> m % 32) & 255);
-
-		return n;
+	function ff(a, b, c, d, x, s, t) {
+		return cmn((b & c) | ((~b) & d), a, b, x, s, t);
 	}
 
-	function Y(d, _) {
-		(d[_ >> 5] |= 128 << _ % 32), (d[14 + (((_ + 64) >>> 9) << 4)] = _);
+	function gg(a, b, c, d, x, s, t) {
+		return cmn((b & d) | (c & (~d)), a, b, x, s, t);
+	}
 
-		for (
-			var m = 1732584193, f = -271733879, r = -1732584194, i = 271733878, n = 0; n < d.length; n += 16
-		) {
-			var h = m,
-				t = f,
-				g = r,
-				e = i;
-			//Piping 4^4
-			(f = md5_ii(
-				(f = md5_ii(
-					(f = md5_ii(
-						(f = md5_ii(
-							(f = md5_hh(
-								(f = md5_hh(
-									(f = md5_hh(
-										(f = md5_hh(
-											(f = md5_gg(
-												(f = md5_gg(
-													(f = md5_gg(
-														(f = md5_gg(
-															(f = md5_ff(
-																(f = md5_ff(
-																	(f = md5_ff(
-																		(f = md5_ff(
-																			f,
-																			(r = md5_ff(
-																				r,
-																				(i = md5_ff(
-																					i,
-																					(m = md5_ff(
-																						m,
-																						f,
-																						r,
-																						i,
-																						d[n + 0],
-																						7,
-																						-680876936
-																					)),
-																					f,
-																					r,
-																					d[n + 1],
-																					12,
-																					-389564586
-																				)),
-																				m,
-																				f,
-																				d[n + 2],
-																				17,
-																				606105819
-																			)),
-																			i,
-																			m,
-																			d[n + 3],
-																			22,
-																			-1044525330
-																		)),
-																		(r = md5_ff(
-																			r,
-																			(i = md5_ff(
-																				i,
-																				(m = md5_ff(
-																					m,
-																					f,
-																					r,
-																					i,
-																					d[n + 4],
-																					7,
-																					-176418897
-																				)),
-																				f,
-																				r,
-																				d[n + 5],
-																				12,
-																				1200080426
-																			)),
-																			m,
-																			f,
-																			d[n + 6],
-																			17,
-																			-1473231341
-																		)),
-																		i,
-																		m,
-																		d[n + 7],
-																		22,
-																		-45705983
-																	)),
-																	(r = md5_ff(
-																		r,
-																		(i = md5_ff(
-																			i,
-																			(m = md5_ff(
-																				m,
-																				f,
-																				r,
-																				i,
-																				d[n + 8],
-																				7,
-																				1770035416
-																			)),
-																			f,
-																			r,
-																			d[n + 9],
-																			12,
-																			-1958414417
-																		)),
-																		m,
-																		f,
-																		d[n + 10],
-																		17,
-																		-42063
-																	)),
-																	i,
-																	m,
-																	d[n + 11],
-																	22,
-																	-1990404162
-																)),
-																(r = md5_ff(
-																	r,
-																	(i = md5_ff(
-																		i,
-																		(m = md5_ff(
-																			m,
-																			f,
-																			r,
-																			i,
-																			d[n + 12],
-																			7,
-																			1804603682
-																		)),
-																		f,
-																		r,
-																		d[n + 13],
-																		12,
-																		-40341101
-																	)),
-																	m,
-																	f,
-																	d[n + 14],
-																	17,
-																	-1502002290
-																)),
-																i,
-																m,
-																d[n + 15],
-																22,
-																1236535329
-															)),
-															(r = md5_gg(
-																r,
-																(i = md5_gg(
-																	i,
-																	(m = md5_gg(
-																		m,
-																		f,
-																		r,
-																		i,
-																		d[n + 1],
-																		5,
-																		-165796510
-																	)),
-																	f,
-																	r,
-																	d[n + 6],
-																	9,
-																	-1069501632
-																)),
-																m,
-																f,
-																d[n + 11],
-																14,
-																643717713
-															)),
-															i,
-															m,
-															d[n + 0],
-															20,
-															-373897302
-														)),
-														(r = md5_gg(
-															r,
-															(i = md5_gg(
-																i,
-																(m = md5_gg(
-																	m,
-																	f,
-																	r,
-																	i,
-																	d[n + 5],
-																	5,
-																	-701558691
-																)),
-																f,
-																r,
-																d[n + 10],
-																9,
-																38016083
-															)),
-															m,
-															f,
-															d[n + 15],
-															14,
-															-660478335
-														)),
-														i,
-														m,
-														d[n + 4],
-														20,
-														-405537848
-													)),
-													(r = md5_gg(
-														r,
-														(i = md5_gg(
-															i,
-															(m = md5_gg(m, f, r, i, d[n + 9], 5, 568446438)),
-															f,
-															r,
-															d[n + 14],
-															9,
-															-1019803690
-														)),
-														m,
-														f,
-														d[n + 3],
-														14,
-														-187363961
-													)),
-													i,
-													m,
-													d[n + 8],
-													20,
-													1163531501
-												)),
-												(r = md5_gg(
-													r,
-													(i = md5_gg(
-														i,
-														(m = md5_gg(m, f, r, i, d[n + 13], 5, -1444681467)),
-														f,
-														r,
-														d[n + 2],
-														9,
-														-51403784
-													)),
-													m,
-													f,
-													d[n + 7],
-													14,
-													1735328473
-												)),
-												i,
-												m,
-												d[n + 12],
-												20,
-												-1926607734
-											)),
-											(r = md5_hh(
-												r,
-												(i = md5_hh(
-													i,
-													(m = md5_hh(m, f, r, i, d[n + 5], 4, -378558)),
-													f,
-													r,
-													d[n + 8],
-													11,
-													-2022574463
-												)),
-												m,
-												f,
-												d[n + 11],
-												16,
-												1839030562
-											)),
-											i,
-											m,
-											d[n + 14],
-											23,
-											-35309556
-										)),
-										(r = md5_hh(
-											r,
-											(i = md5_hh(
-												i,
-												(m = md5_hh(m, f, r, i, d[n + 1], 4, -1530992060)),
-												f,
-												r,
-												d[n + 4],
-												11,
-												1272893353
-											)),
-											m,
-											f,
-											d[n + 7],
-											16,
-											-155497632
-										)),
-										i,
-										m,
-										d[n + 10],
-										23,
-										-1094730640
-									)),
-									(r = md5_hh(
-										r,
-										(i = md5_hh(
-											i,
-											(m = md5_hh(m, f, r, i, d[n + 13], 4, 681279174)),
-											f,
-											r,
-											d[n + 0],
-											11,
-											-358537222
-										)),
-										m,
-										f,
-										d[n + 3],
-										16,
-										-722521979
-									)),
-									i,
-									m,
-									d[n + 6],
-									23,
-									76029189
-								)),
-								(r = md5_hh(
-									r,
-									(i = md5_hh(
-										i,
-										(m = md5_hh(m, f, r, i, d[n + 9], 4, -640364487)),
-										f,
-										r,
-										d[n + 12],
-										11,
-										-421815835
-									)),
-									m,
-									f,
-									d[n + 15],
-									16,
-									530742520
-								)),
-								i,
-								m,
-								d[n + 2],
-								23,
-								-995338651
-							)),
-							(r = md5_ii(
-								r,
-								(i = md5_ii(
-									i,
-									(m = md5_ii(m, f, r, i, d[n + 0], 6, -198630844)),
-									f,
-									r,
-									d[n + 7],
-									10,
-									1126891415
-								)),
-								m,
-								f,
-								d[n + 14],
-								15,
-								-1416354905
-							)),
-							i,
-							m,
-							d[n + 5],
-							21,
-							-57434055
-						)),
-						(r = md5_ii(
-							r,
-							(i = md5_ii(
-								i,
-								(m = md5_ii(m, f, r, i, d[n + 12], 6, 1700485571)),
-								f,
-								r,
-								d[n + 3],
-								10,
-								-1894986606
-							)),
-							m,
-							f,
-							d[n + 10],
-							15,
-							-1051523
-						)),
-						i,
-						m,
-						d[n + 1],
-						21,
-						-2054922799
-					)),
-					(r = md5_ii(
-						r,
-						(i = md5_ii(
-							i,
-							(m = md5_ii(m, f, r, i, d[n + 8], 6, 1873313359)),
-							f,
-							r,
-							d[n + 15],
-							10,
-							-30611744
-						)),
-						m,
-						f,
-						d[n + 6],
-						15,
-						-1560198380
-					)),
-					i,
-					m,
-					d[n + 13],
-					21,
-					1309151649
-				)),
-				(r = md5_ii(
-					r,
-					(i = md5_ii(
-						i,
-						(m = md5_ii(m, f, r, i, d[n + 4], 6, -145523070)),
-						f,
-						r,
-						d[n + 11],
-						10,
-						-1120210379
-					)),
-					m,
-					f,
-					d[n + 2],
-					15,
-					718787259
-				)),
-				i,
-				m,
-				d[n + 9],
-				21,
-				-343485551
-			)),
-			(m = safe_add(m, h)),
-			(f = safe_add(f, t)),
-			(r = safe_add(r, g)),
-			(i = safe_add(i, e));
+	function hh(a, b, c, d, x, s, t) {
+		return cmn(b ^ c ^ d, a, b, x, s, t);
+	}
+
+	function ii(a, b, c, d, x, s, t) {
+		return cmn(c ^ (b | (~d)), a, b, x, s, t);
+	}
+
+	function md51(s) {
+		let n = s.length,
+			state = [1732584193, -271733879, -1732584194, 271733878],
+			i;
+		for (i = 64; i <= s.length; i += 64)
+			md5cycle(state, md5blk(s.substring(i - 64, i)));
+
+		s = s.substring(i - 64);
+		let tail = generateArray(16);
+		for (i = 0; i < s.length; i++)
+			tail[i >> 2] |= s.charCodeAt(i) << ((i % 4) << 3);
+		tail[i >> 2] |= 0x80 << ((i % 4) << 3);
+		if (i > 55) {
+			md5cycle(state, tail);
+			tail = generateArray(16);
 		}
-		return Array(m, f, r, i);
+		tail[14] = n * 8;
+		md5cycle(state, tail);
+		return state;
 	}
 
-	function md5_cmn(d, _, m, f, r, i) {
-		return safe_add(bit_rol(safe_add(safe_add(_, d), safe_add(f, i)), r), m);
+	function md5blk(s) {
+		const md5blks = [];
+		for (let i = 0; i < 64; i += 4) {
+			md5blks[i >> 2] = s.charCodeAt(i) +
+				(s.charCodeAt(i + 1) << 8) +
+				(s.charCodeAt(i + 2) << 16) +
+				(s.charCodeAt(i + 3) << 24);
+		}
+		return md5blks;
 	}
 
-	function md5_ff(d, _, m, f, r, i, n) {
-		return md5_cmn((_ & m) | (~_ & f), d, _, r, i, n);
+	function rhex(n) {
+		const hex_chr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+		let s = '';
+		for (let j = 0; j < 4; j++)
+			s += hex_chr[(n >> (j * 8 + 4)) & 0x0F] +
+			hex_chr[(n >> (j * 8)) & 0x0F];
+		return s;
 	}
 
-	function md5_gg(d, _, m, f, r, i, n) {
-		return md5_cmn((_ & f) | (m & ~f), d, _, r, i, n);
+	function hex(x) {
+		return x.reduce((s, o) => s + rhex(o), '');
 	}
 
-	function md5_hh(d, _, m, f, r, i, n) {
-		return md5_cmn(_ ^ m ^ f, d, _, r, i, n);
-	}
-
-	function md5_ii(d, _, m, f, r, i, n) {
-		return md5_cmn(m ^ (_ | ~f), d, _, r, i, n);
-	}
-
-	function safe_add(d, _) {
-		let m = (65535 & d) + (65535 & _);
-		return (((d >> 16) + (_ >> 16) + (m >> 16)) << 16) | (65535 & m);
-	}
-
-	function bit_rol(d, _) {
-		return (d << _) | (d >>> (32 - _));
+	function add32(x, y) {
+		const lsw = (x & 0xFFFF) + (y & 0xFFFF),
+			msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+		return (msw << 16) | (lsw & 0xFFFF);
 	}
 
 	exports.ask = opt => {
@@ -632,22 +271,20 @@
 			if (opt.value) query += "=" + opt.value;
 		}
 		if (opt.responseType) {
-			const responseTypes = [
-				"text",
-				"arraybuffer",
-				"blob",
-				"document",
-				"json",
-				"ms-stream",
-				"moz-chunked-arraybuffer"
-			];
-			if (responseTypes.indexOf(opt.responseType) === -1)
+			if ([
+					"text",
+					"arraybuffer",
+					"blob",
+					"document",
+					"json",
+					"ms-stream",
+					"moz-chunked-arraybuffer"
+				].indexOf(opt.responseType) === -1)
 				throw "Invalid responseType";
 			else responseType = opt.responseType;
 		}
 		if (opt.requestType) {
-			const requestTypes = ["GET", "POST", "PUT", "DELETE"];
-			if (requestTypes.indexOf(opt.requestType.toUpperCase()) === -1)
+			if (["GET", "POST", "PUT", "DELETE"].indexOf(opt.requestType.toUpperCase()) === -1)
 				throw "Invalid requestType";
 			else requestType = opt.requestType;
 		}
@@ -770,7 +407,6 @@
 	};
 
 	exports.cleanup = callback => {
-		callback = callback || (_ => {});
 
 		process.on("cleanup", callback);
 
@@ -781,6 +417,7 @@
 
 		// catch ctrl+c event and exit normally
 		process.on("SIGINT", _ => {
+			process.emit("cleanup");
 			process.exit(2);
 		});
 
@@ -788,11 +425,8 @@
 		process.on("uncaughtException", e => {
 			log("Uncaught Exception...");
 			error(e.stack);
+			process.emit("cleanup");
 			process.exit(99);
 		});
 	};
-
-	if (isScript)
-		for (let key of Object.keys(exports))
-			if (!window[key]) window[key] = exports[key];
-})();
+})(typeof exports == "undefined" ? window : exports);
