@@ -108,6 +108,26 @@
 		return `${y}-${m}-${d} ${t}`;
 	};
 
+	exports.sha256 = async message => crypto_digest('SHA-256', message);
+	exports.sha384 = async message => crypto_digest('SHA-384', message);
+	exports.sha512 = async message => crypto_digest('SHA-512', message);
+
+	async function crypto_digest(algo, message) {
+
+		// encode as UTF-8
+		const msgBuffer = new TextEncoder('utf-8').encode(message);
+
+		// hash the message
+		const hashBuffer = await crypto.subtle.digest(algo, msgBuffer);
+
+		// convert ArrayBuffer to Array
+		const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+		// convert bytes to hex string
+		const hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+		return hashHex;
+	}
+
 	exports.MD5 = s => hex(md51(s));
 
 	function md5cycle(x, k) {

@@ -280,9 +280,24 @@ const oTime = getCurrentDateTime();
 oTime //? => "2019-04-08 17:31:47"
 ```
 
-### MD5(valeur)
+### sha256(message) && sha384(message) && sha512(message)
 
-#### Renvoie le hashage de valeur
+#### Renvoie le hashage SHA du message
+
+```javascript
+const msg = 'password';
+const sha = [sha256, sha384, sha512];
+Promise.all(sha.map(o => o(msg))).then(log);
+/*
+[
+    "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8","a8b64babd0aca91a59bdbb7761b421d4f2bb38280d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7","b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86"
+]
+*/
+```
+
+### MD5(message)
+
+#### Renvoie le hashage MD5 du message
 
 ```javascript
 const hashMd = MD5('password');
