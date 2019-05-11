@@ -236,15 +236,18 @@ const valMap = map(25, 0, 100, 50, 60);
 valMap //? => 52.5
 ```
 
-### loadImage(objet, lien)
+### loadImage(objet, lien) && loadImage(lien)
 
-#### Charge un image et l'attache à objet dans la propriété img
+#### Charge un image et si un objet est fourni l'attache à l'objet dans la propriété img
 
 ```javascript
 loadImage(player, './image/player.png');
 //...
 //Si chargé
 player.img //? => Image Object
+//...
+const sprite_brick = loadImage('./image/brick.png');
+//...
 ```
 
 ### isImage(lien)
@@ -257,6 +260,18 @@ player.img //? => Image Object
 if(isImage(link)){
     //do image related stuff
 }
+```
+
+### loadAudio(lien, options) && loadAudio(lien)
+
+#### Charge un fichier audio et applique les options fourni
+
+##### options par défaut = { autoplay: false, loop: false, volume: 1 }
+
+```javascript
+const music = loadAudio('./music/background.mp3', { autoplay: true, loop: true, volume: 0.3 });
+const fire_sound = loadAudio('./music/jumping.ogg', { volume: 0.2, loop: true });
+const jump_sound = loadAudio('./music/jumping.ogg', { volume: 0.5 });
 ```
 
 ### isAudio(lien)
@@ -390,6 +405,29 @@ cleanup(_ => {
 ```javascript
 const inf = parseUrl('localhost/test?vues=joker&help=batman');
 inf //? => { link: 'localhost', dir: 'test', params: { vues: 'joker', help: 'batman', length: 2 }}
+```
+
+### class Rectangle(x, y, w, h, c)
+
+#### Objet pour intialiser un rectangle qui est dessinable dans un canvas et si un image est attaché, dessine l'image
+
+##### Paramètres par défaut = { x: 0, y: 0, w: 0, h: 0, c: 'black' }
+
+```javascript
+const brick = new Rectangle(40, 30, 50, 50, 'green');
+//...
+//ctx = canvas.getContext('2d');
+brick.draw(ctx);
+
+//...
+
+const player = new Rectangle(0, 0, 50, 100, 'yellow');
+loadImage(player, "./images/player.png");
+//...
+//Si l'image est chargé, dessine player.png
+player.draw(ctx);
+
+
 ```
 
 ## License

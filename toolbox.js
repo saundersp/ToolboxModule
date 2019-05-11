@@ -87,16 +87,33 @@
 
 	exports.map = (v, f1, f2, l1, l2) => l1 + (l2 - l1) * ((v - f1) / (f2 - f1));
 
-	exports.loadImage = (o, u) => {
+	exports.loadImage = (o, s) => {
 		const i = new Image();
-		i.src = u;
-		i.onload = _ => (o.img = i);
+		if (s) {
+			i.src = s;
+			i.onload = _ => o.img = i;
+		} else
+			i.src = o;
 		i.onerror = error;
+		return i;
 	};
 
-	exports.isImage = u => /\.(jpeg|jpg|gif|png)$/.test(u);
+	exports.isImage = l => /\.(jpeg|jpg|gif|png)$/.test(l);
 
-	exports.isAudio = u => /\.(mp3|ogg|wav)$/.test(u);
+	exports.loadAudio = (s, opt = {}) => {
+		const a = new Audio();
+		a.src = s;
+		a.autoplay = opt.autoplay || false;
+		a.loop = opt.loop || false;
+		a.volume = opt.volume || 1.0;
+		a.stop = function () {
+			this.pause();
+			this.currentTime = 0;
+		};
+		return a;
+	};
+
+	exports.isAudio = l => /\.(mp3|ogg|wav)$/.test(l);
 
 	exports.getCurrentDateTime = _ => {
 		const c = new Date(),
@@ -449,4 +466,33 @@
 			process.exit(99);
 		});
 	};
+
+	class Rectangle {
+		constructor(_x = 0, _y = 0, _w = 0, _h = 0, _c = 'black') {
+			this.x = _x;
+			this.y = _y;
+			this.w = _w;
+			this.h = _h;
+			this.c = _c;
+
+			//Image placeholder
+			this.img = undefined;
+		}
+
+		draw(ctx) {
+			ctx.save();
+			ctx.translate(this.x, this.y);
+			//If no img
+			if (this.img != undefined)
+				ctx.drawImage(this.img, 0, 0, this.w, this.h);
+			else {
+				ctx.fillStyle = this.c;
+				ctx.fillRect(0, 0, this.w, this.h);
+			}
+			ctx.restore();
+		}
+	}
+
+	exports.Rectangle = Rectangle;
+
 })(typeof exports == "undefined" ? window : exports);
