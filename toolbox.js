@@ -63,6 +63,28 @@
 		return min + Math.random() * (max - min);
 	};
 
+	let previous = false;
+	let y2 = 0;
+	exports.randomGaussian = (mean = 0, sd = 1) => {
+		let y1;
+		if (previous) {
+			y1 = y2;
+			previous = false;
+		} else {
+			let x1, x2, w = Infinity;
+			do {
+				x1 = exports.randomFloat(2) - 1;
+				x2 = exports.randomFloat(2) - 1;
+				w = x1 * x1 + x2 * x2;
+			} while (w >= 1);
+			w = Math.sqrt(-2 * Math.log(w) / w);
+			y1 = x1 * w;
+			y2 = x2 * w;
+			previous = true;
+		}
+		return y1 * sd + mean;
+	};
+
 	exports.removeFromArray = (t, o) => {
 		const i = t.indexOf(o);
 		if (i !== -1) t.splice(i, 1);

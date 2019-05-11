@@ -184,6 +184,17 @@ n //? => un chiffre dans [50.0 et 100.0[
 k //? => un chiffre entre [0.0 et 20.0[
 ```
 
+### randomGaussian()
+
+#### Donne un nombre Gaussian
+
+##### Paramètre optionnel = { moyenne: 0, deviation: 1 }
+
+```javascript
+const n = randomGaussian(50.0, 100.0);
+n //? => nombre aléatoire gaussian
+```
+
 ### removeFromArray(array, obj)
 
 #### Retire un Objet obj du tableau array
