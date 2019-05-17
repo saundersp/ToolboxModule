@@ -528,4 +528,4 @@
 		cf(value);
 	};
 
-})(typeof exports == "undefined" ? window : exports);
+})(typeof exports == "undefined" ? typeof window == "undefined" ? self : window : exports);
