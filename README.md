@@ -437,8 +437,29 @@ loadImage(player, "./images/player.png");
 //...
 //Si l'image est chargé, dessine player.png
 player.draw(ctx);
+```
 
+### defineControlledProperty(objet, nom_propriete, valeur_initial, check_function)
 
+#### Permet de définir une propriété d'un objet avec un setter personnalisé
+
+##### Wrapper de Object.defineProperty(objet, nom_propriete, { get: valeur_initial, set: check_function })
+
+```javascript
+class Player(){
+    constructor(x, y){
+        defineControlledProperty(this, 'x', x, nx => {
+            if(isNan(nx) || nx < 0) throw 'Incorrect X !';
+        });
+        defineControlledProperty(this, 'y', y, ny => {
+            if(isNan(ny) || ny < 0) throw 'Incorrect Y !';
+        });
+    }
+    //...
+}
+
+const player = new Player(-20, 30);
+//? => error ! : Incorrect X !
 ```
 
 ## License

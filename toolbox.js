@@ -517,4 +517,15 @@
 
 	exports.Rectangle = Rectangle;
 
+	exports.defineControlledProperty = (o, n, v, cf) => {
+		Object.defineProperty(o, n, {
+			get: _ => v,
+			set: nv => {
+				cf(nv);
+				v = nv;
+			}
+		});
+		cf(value);
+	};
+
 })(typeof exports == "undefined" ? window : exports);
