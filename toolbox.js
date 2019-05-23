@@ -528,4 +528,9 @@
 		cf(value);
 	};
 
+	exports.arrayEqual = (t1, t2) => {
+		return t1.length === t1.length &&
+			t1.every((o, i) => o === t2[i]);
+	};
+
 })(typeof exports == "undefined" ? typeof window == "undefined" ? self : window : exports);
