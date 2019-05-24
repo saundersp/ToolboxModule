@@ -468,13 +468,26 @@ const player = new Player(-20, 30);
 ##### Note: fonctionne que si chaque (arr1[i] === arr2[i]) === true
 
 ```javascript
-
 const t1 = [1,5,3];
 const t2 = [1,2,3];
 
-arrayEqual(t1, t2); //? => false
-arrayEqual(t1, [1,5,3]); //? => true
-arrayEqual(t2, [1,2,3]); //? => true
+arrayEqual(t1, t2) //? => false
+arrayEqual(t1, [1,5,3]) //? => true
+arrayEqual(t2, [1,2,3]) //? => true
+```
+
+### colourNameToHex(colour) && colorNameToHex(color)
+
+#### Récupèrer le code hexadécimal d'une couleur CSS
+
+##### Note: renvoie false si inconnu
+
+```javascript
+const hex = colourNameToHex('aquamarine');
+hex //? => '#7fffd4'
+//...
+const hex = colourNameToHex('blda');
+hex //? => false
 ```
 
 ## License
