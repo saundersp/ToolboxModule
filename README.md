@@ -4,9 +4,9 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 
 ## Usage
 
-1. `Cloner le répertoire avec git clone https://github.com/saundersp/ToolboxModule.git`
-2. `Pour NodeJS : Utilisez require('../ToolboxModule')`
-3. `Pour navigateur : Mettre <script src="toolbox.min.js"></script> dans le head`
+1. `Cloner ou télécharger le répertoire`
+2. `Pour NodeJS : Utilisez require('ToolboxModule')`
+3. `Pour navigateur : Mettre <script src="toolbox.min.js"></script> en premier dans <head>`
 
 ## Documentation des fonctions
 
@@ -116,16 +116,10 @@ class Player {
 #### Contraint la valeur n à être dans l'intervalle [min, max]
 
 ```javascript
-let vY = 40;
-
-vY = constrain(vY, -20, 30);
-
+vY = constrain(40, -20, 30);
 vY //? => 30
 
-vY = -57;
-
-vY = constrain(vY, -20, 30);
-
+vY = constrain(-57, -20, 30);
 vY //? => -20
 ```
 
@@ -202,7 +196,7 @@ n //? => nombre aléatoire gaussian
 ##### Note: fonctionne que si (array[i] === obj) === true
 
 ```javascript
-let tab = [ /* elements... */];
+let tab = [ /* elements... */ ];
 //...
 tab[i] //? => 3;
 //...
@@ -234,8 +228,13 @@ delay(2000)
     //Do stuffs...
 })
 .catch(err => {
-    console.error(`Error while in delay ! ${err}`);
+    error(`Error while in delay ! ${err}`);
 });
+//...
+(async function(){
+    await delay(2000);
+    //Do stuffs...
+})();
 ```
 
 ### map(valeur, min1, max1, min2, max2)
@@ -316,7 +315,9 @@ const sha = [sha256, sha384, sha512];
 Promise.all(sha.map(o => o(msg))).then(log);
 /*
 [
-    "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8","a8b64babd0aca91a59bdbb7761b421d4f2bb38280d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7","b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86"
+    "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+        "a8b64babd0aca91a59bdbb7761b421d4f2bb38280d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7",
+    "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86"
 ]
 */
 ```
@@ -365,16 +366,14 @@ const opt = {
     requestType: "get"
 };
 
-//opt => localhost/?vues=joker
-
-ask(opt)
-.then(res => {
-    res //? => JSON String
+//opt => (XHR req) localhost/?vues=joker
+try {
+    const res = await ask(opt);
+    res //? => JSON formatted String
     //Do things...
-})
-.catch(err => {
-    console.error("Can't ask !", err);
-});
+} catch(err){
+    error("Can't ask !", err);
+}
 ```
 
 ### $(htmlElement)
