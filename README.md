@@ -461,6 +461,22 @@ const player = new Player(-20, 30);
 //? => error ! : Incorrect X !
 ```
 
+### arrayEqual(arr1, arr2)
+
+#### Permet de comparer l'égalité total (de chaque entité) de 2 tableaux
+
+##### Note: fonctionne que si chaque (arr1[i] === arr2[i]) === true
+
+```javascript
+
+const t1 = [1,5,3];
+const t2 = [1,2,3];
+
+arrayEqual(t1, t2); //? => false
+arrayEqual(t1, [1,5,3]); //? => true
+arrayEqual(t2, [1,2,3]); //? => true
+```
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
