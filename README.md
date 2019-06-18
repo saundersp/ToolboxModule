@@ -27,6 +27,45 @@ class Player {
 }
 ```
 
+### calcDistance(object1, object2)
+
+#### Permet de calculer la distance entre deux objet
+
+##### Note: utilise la propiétés x et y sur les deux objets
+
+```javascript
+class Missile {
+//...
+    move(ms){
+        //...
+        if(calcDistance(this, player) < 50){
+            //Change animation
+        }
+        //...
+    }
+//...
+}
+```
+
+### calcAngle(object1, object2)
+
+#### Permet de calculer l'angle de la ligne entre deux objet
+
+##### Note: utilise la propiétés x et y sur les deux objets
+
+```javascript
+class Missile {
+//...
+    draw(ctx){
+        //...
+        const ang = calcAngle(this, player);
+        ctx.rotate(ang);
+        //...
+    }
+//...
+}
+```
+
 ### collisionX(object1, object2) || collisionX(object1, object[])
 
 #### Vérifie la collision entre deux objets sur l'axe horizontale X
@@ -154,9 +193,11 @@ if(keyInput.ArrowRight){
 }
 ```
 
-### random(min, max) || random(max)
+### random(min, max) || random(max) || random(tableau)
 
-#### Donne un nombre rond aléatoire entre min et max
+#### Donne un nombre rond aléatoire entre min et max, si on donne un tableau renvoie un élément aléatoire du tableau
+
+##### Paramètre optionnel = { min: 0, max: 1 }
 
 ```javascript
 const n = random(50, 100);
@@ -166,23 +207,25 @@ n //? => un chiffre entre [50 et 100[
 k //? => un chiffre entre [0 et 20[
 ```
 
-### randomFloat(min, max) || random(max)
+### randomFloat(min, max) || randomFloat(max)
 
 #### Donne un nombre avec virgule aléatoire entre min et max
 
+##### Paramètre optionnel = { min: 0.0, max: 1.0 }
+
 ```javascript
-const n = random(50.0, 100.0);
-const k = random(20.0);
+const n = randomFloat(50.0, 100.0);
+const k = randomFloat(20.0);
 
 n //? => un chiffre dans [50.0 et 100.0[
 k //? => un chiffre entre [0.0 et 20.0[
 ```
 
-### randomGaussian()
+### randomGaussian(moyenne, déviation)
 
 #### Donne un nombre Gaussian
 
-##### Paramètre optionnel = { moyenne: 0, deviation: 1 }
+##### Paramètre optionnel = { moyenne: 0, déviation: 1 }
 
 ```javascript
 const n = randomGaussian(50.0, 100.0);
@@ -351,6 +394,7 @@ pow(2, 3);    //? => 8
 floor(2.635); //? => 2
 ceil(2.443);  //? => 3
 abs(-23);     //? => 23
+sqrt(9);      //? => 3
 ```
 
 ### ask(Options)

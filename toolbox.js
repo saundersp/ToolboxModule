@@ -8,8 +8,19 @@
 	exports.floor = Math.floor;
 	exports.ceil = Math.ceil;
 	exports.abs = Math.abs;
+	exports.sqrt = Math.sqrt;
 
 	exports.calcSpeedFromDelta = (d, s) => (s * d) / 1e3;
+
+	exports.calcDistance = (o1, o2) => {
+		const x = pow(abs(o2.x - o1.x), 2);
+		const y = pow(abs(o2.y - o1.y), 2);
+		return sqrt(x + y);
+	};
+
+	exports.calcAngle = (o1, o2) => {
+		return Math.atan2(o2.y - o1.y, o2.x - o1.x);
+	};
 
 	exports.collisionX = (o1, o2) => {
 		if (o2.some) return o2.some(obj => collisionX(o1, obj));
@@ -42,7 +53,9 @@
 	};
 
 	exports.random = (min, max) => {
-		if (min == undefined) {
+		if (Array.isArray(min) && max == undefined)
+			return min[random(min.length)];
+		else if (min == undefined) {
 			min = 0;
 			max = 2;
 		} else if (max == undefined) {
@@ -73,11 +86,11 @@
 		} else {
 			let x1, x2, w = Infinity;
 			do {
-				x1 = exports.randomFloat(2) - 1;
-				x2 = exports.randomFloat(2) - 1;
+				x1 = exports.randomFloat(2.0) - 1;
+				x2 = exports.randomFloat(2.0) - 1;
 				w = x1 * x1 + x2 * x2;
 			} while (w >= 1);
-			w = Math.sqrt(-2 * Math.log(w) / w);
+			w = sqrt(-2 * Math.log(w) / w);
 			y1 = x1 * w;
 			y2 = x2 * w;
 			previous = true;
@@ -533,8 +546,8 @@
 			t1.every((o, i) => o === t2[i]);
 	};
 
-	//UK
-	exports.colourNameToHex = c => {
+	//US ------------------- UK
+	exports.colorNameToHex = exports.colourNameToHex = c => {
 		const colours = {
 			"aliceblue": "#f0f8ff",
 			"antiquewhite": "#faebd7",
@@ -684,8 +697,5 @@
 
 		return false;
 	};
-
-	//US
-	exports.colorNameToHex = exports.colourNameToHex;
 
 })(typeof exports == "undefined" ? typeof window == "undefined" ? self : window : exports);
