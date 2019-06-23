@@ -162,6 +162,17 @@ vY = constrain(-57, -20, 30);
 vY //? => -20
 ```
 
+### range(n)
+
+#### Construit un tableau de N élements dont la valeur est égale à l'indice de l'élément
+
+##### (Commande venant de Python)
+
+```javascript
+const t = range(5);
+t //? => [0, 1, 2, 3, 4]
+```
+
 ### trackKeys(keys[])
 
 #### Renvoie un tableau des touches pressées à chaque moment

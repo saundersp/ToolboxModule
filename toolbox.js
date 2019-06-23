@@ -52,6 +52,8 @@
 		return d;
 	};
 
+	exports.range = n => new Array(n).fill(0).map((_, i) => i);
+
 	exports.random = (min, max) => {
 		if (Array.isArray(min) && max == undefined)
 			return min[random(min.length)];
