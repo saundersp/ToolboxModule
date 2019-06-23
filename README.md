@@ -8,6 +8,42 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 2. `Pour NodeJS : Utilisez require('ToolboxModule')`
 3. `Pour navigateur : Mettre <script src="toolbox.min.js"></script> en premier dans <head>`
 
+## Sommaire / Raccourcis
+
+- [calcSpeedFromDelta](#calcSpeedFromDelta(delta,-speed))
+- [calcDistance](#calcDistance(object1,-object2))
+- [calcAngle](#calcAngle(object1,-object2))
+- [collisionX](#collisionX(object1,-object2)-||-collisionX(object1,-object[]))
+- [collisionY](#collisionY(object1,-object2)-||-collisionY(object1,-object[]))
+- [collision](#collision(object1,-object2)-||-collision(object1,-object[]))
+- [constrain](#constrain(n,-min,-max))
+- [range](#range(n))
+- [trackKeys](#trackKeys(keys[]))
+- [random](#random(min,-max)-||-random(max)-||-random(tableau))
+- [randomFloat](#randomFloat(min,-max)-||-randomFloat(max))
+- [randomGaussian](#randomGaussian(moyenne,-déviation))
+- [removeFromArray](#removeFromArray(array,-obj))
+- [generateArray](#generateArray(...size))
+- [delay](#delay(n))
+- [map](#map(valeur,-min1,-max1,-min2,-max2))
+- [loadImage](#loadImage(objet,-lien)-&&-loadImage(lien))
+- [isImage](#isImage(lien))
+- [loadAudio](#loadAudio(lien,-options)-&&-loadAudio(lien))
+- [isAudio](#isAudio(lien))
+- [getCurrentDateTime](#getCurrentDateTime())
+- [sha256](#sha256(message)-&&-sha384(message)-&&-sha512(message))
+- [MD5](#MD5(message))
+- [log](#log(Objet)-&&-error(Objet))
+- [Fonctions Maths](#Fonctions-Maths(max,-min,-pow,-floor,-ceil,-abs,-sqrt))
+- [ask](#ask(Options))
+- [$ (JQuery)](#$(htmlElement))
+- [cleanup](#cleanup(fonction))
+- [parseUrl](#parseUrl(url))
+- [[Class] Rectangle](#class-Rectangle(x,-y,-w,-h,-c))
+- [defineControlledProperty](#defineControlledProperty(objet,-nom_propriete,-valeur_initial,-check_function))
+- [arrayEqual](#arrayEqual(arr1,-arr2))
+- [colourNameToHex](#colourNameToHex(colour)-&&-colorNameToHex(color))
+
 ## Documentation des fonctions
 
 ### calcSpeedFromDelta(delta, speed)
@@ -394,7 +430,7 @@ log("Some amazing text !");
 error("Something wrong...");
 ```
 
-### Fonctions Maths
+### Fonctions Maths(max, min, pow, floor, ceil, abs, sqrt)
 
 #### Wrapper de diverses fonctions de Math
 
