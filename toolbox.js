@@ -1,5 +1,5 @@
 (exports => {
-	exports.print = console.log;
+	exports.print = (...args) => console.log(...args);
 	exports.error = console.error;
 
 	exports.max = function (...args) {
