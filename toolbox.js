@@ -142,7 +142,7 @@
 		return i;
 	};
 
-	exports.isImage = l => /\.(jpeg|jpg|gif|png)$/.test(l);
+	exports.isImage = l => /\.(tif|jpeg|jpg|gif|png)$/.test(l.trim().toLowerCase());
 
 	exports.loadAudio = (s, opt = {}) => {
 		const a = new Audio();

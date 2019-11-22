@@ -357,7 +357,7 @@ const sprite_brick = loadImage('./image/brick.png');
 
 #### Utilise un expression régulière pour tester si le lien donne une image
 
-##### Note: fonctionne sur les fichiers jpeg, jpg, gif et png
+##### Note: fonctionne sur les fichiers tif, jpeg, jpg, gif et png
 
 ```javascript
 if(isImage(link)){
