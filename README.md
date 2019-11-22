@@ -33,7 +33,7 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 - [getCurrentDateTime](###getCurrentDateTime())
 - [sha256](###sha256(message)-&&-sha384(message)-&&-sha512(message))
 - [MD5](###MD5(message))
-- [print](###print(Objet)-&&-error(Objet))
+- [Fonctions console](###Fonctions-console(log,-error))
 - [Fonctions Maths](###Fonctions-Maths(max,-min,-pow,-floor,-ceil,-abs,-sqrt))
 - [ask](###ask(Options))
 - [$ (JQuery)](###$(htmlElement))
@@ -406,7 +406,7 @@ oTime //? => "2019-04-08 17:31:47"
 ```javascript
 const msg = 'password';
 const sha = [sha256, sha384, sha512];
-Promise.all(sha.map(o => o(msg))).then(print);
+Promise.all(sha.map(o => o(msg))).then(log);
 /*
 [
     "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
@@ -425,17 +425,17 @@ const hashMd = MD5('password');
 hashMd //? => 5f4dcc3b5aa765d61d8327deb882cf99
 ```
 
-### print(Objet) && error(Objet)
+### Fonctions console (log, error)
 
 #### Wrapper de console
 
 ```javascript
 // Wrapper de console.log
-print("Some amazing text !");
+log("Some amazing text !");
 error("Something wrong...");
 ```
 
-### Fonctions Maths(max, min, pow, floor, ceil, abs, sqrt, log)
+### Fonctions Maths (max, min, pow, floor, ceil, abs, sqrt)
 
 #### Wrapper de diverses fonctions de Math
 
@@ -450,7 +450,6 @@ floor(2.635); //? => 2
 ceil(2.443);  //? => 3
 abs(-23);     //? => 23
 sqrt(9);      //? => 3
-log(10);      //? => 2.30
 ```
 
 ### ask(Options)
@@ -500,11 +499,11 @@ h1.show();
 #### Permet d'attacher une fonction lors que l'arrêt d'un processus NodeJS
 
 ```javascript
-const { print, map, cleanup } = require("../ToolboxModule");
+const { log, map, cleanup } = require("../ToolboxModule");
 //..
 cleanup(_ => {
     //Saving files...
-    print("Closing !");
+    log("Closing !");
 });
 ```
 

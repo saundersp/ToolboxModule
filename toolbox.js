@@ -1,5 +1,5 @@
 (exports => {
-	exports.print = (...args) => console.log(...args);
+	exports.log = console.log;
 	exports.error = console.error;
 
 	exports.max = function (...args) {
@@ -13,7 +13,6 @@
 	exports.ceil = Math.ceil;
 	exports.abs = Math.abs;
 	exports.sqrt = Math.sqrt;
-	exports.log = Math.log;
 
 	exports.calcSpeedFromDelta = (d, s) => s * d / 1e3;
 
