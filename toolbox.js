@@ -57,7 +57,12 @@
 		return d;
 	};
 
-	exports.range = n => new Array(n).fill(0).map((_, i) => i);
+	exports.rangeArray = arr => {
+		if (!Array.isArray(arr))
+			throw 'rangeArray() only accept arrays';
+		else
+			return [min(arr), max(arr)];
+	};
 
 	exports.range = n => this.generateArray(n).map((_, i) => i);
 

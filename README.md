@@ -46,6 +46,7 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 - [sum](#sum(tableau))
 - [mean](#mean(tableau))
 - [stddev](#stddev(tableau))
+- [rangeArray](#rangeArray(tableau))
 
 ## Documentation des fonctions
 
@@ -617,6 +618,16 @@ mu //? => 2.7
 const tab = [ 2, 1, 1, 3, 7, 4, 1, 8, 0, 0 ];
 const sd = stddev(tab);
 sd //? => 7.21
+```
+
+### rangeArray(tableau)
+
+#### Renvoie la porté d'un tableau (minimum et maximum)
+
+```javascript
+const tab = [ 2, 1, 1, 3, 7, 4, 1, 8, 0, 0 ];
+const interval = rangeArray(tab);
+interval //? => [ 0, 8 ]
 ```
 
 ## License
