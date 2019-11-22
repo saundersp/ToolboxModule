@@ -1,20 +1,25 @@
 (exports => {
-	exports.log = console.log;
+	exports.print = console.log;
 	exports.error = console.error;
 
-	exports.max = Math.max;
-	exports.min = Math.min;
+	exports.max = function (...args) {
+		return (args.length == 1 && Array.isArray(args[0])) ? Math.max(...args[0]) : Math.max(...args);
+	};
+	exports.min = function (...args) {
+		return (args.length == 1 && Array.isArray(args[0])) ? Math.min(...args[0]) : Math.min(...args);
+	};
 	exports.pow = Math.pow;
 	exports.floor = Math.floor;
 	exports.ceil = Math.ceil;
 	exports.abs = Math.abs;
 	exports.sqrt = Math.sqrt;
+	exports.log = Math.log;
 
-	exports.calcSpeedFromDelta = (d, s) => (s * d) / 1e3;
+	exports.calcSpeedFromDelta = (d, s) => s * d / 1e3;
 
 	exports.calcDistance = (o1, o2) => {
-		const x = pow(abs(o2.x - o1.x), 2);
-		const y = pow(abs(o2.y - o1.y), 2);
+		const x = pow(o2.x - o1.x, 2);
+		const y = pow(o2.y - o1.y, 2);
 		return sqrt(x + y);
 	};
 
@@ -23,17 +28,17 @@
 	};
 
 	exports.collisionX = (o1, o2) => {
-		if (o2.some) return o2.some(obj => collisionX(o1, obj));
+		if (Array.isArray(o2)) return o2.some(obj => collisionX(o1, obj));
 		else return (!(o1.x > o2.x + o2.w || o1.x + o1.w < o2.x));
 	};
 
 	exports.collisionY = (o1, o2) => {
-		if (o2.some) return o2.some(obj => collisionY(o1, obj));
+		if (Array.isArray(o2)) return o2.some(obj => collisionY(o1, obj));
 		else return (!(o1.y > o2.y + o2.h || o1.y + o1.h < o2.y));
 	};
 
 	exports.collision = (o1, o2) => {
-		if (o2.some) return o2.some(o => collision(o1, o));
+		if (Array.isArray(o2)) return o2.some(o => collision(o1, o));
 		else return collisionX(o1, o2) && collisionY(o1, o2);
 	};
 
@@ -53,6 +58,8 @@
 	};
 
 	exports.range = n => new Array(n).fill(0).map((_, i) => i);
+
+	exports.range = n => this.generateArray(n).map((_, i) => i);
 
 	exports.random = (min, max) => {
 		if (Array.isArray(min) && max == undefined)
@@ -185,10 +192,7 @@
 	exports.MD5 = s => hex(md51(s));
 
 	function md5cycle(x, k) {
-		let a = x[0],
-			b = x[1],
-			c = x[2],
-			d = x[3];
+		let [a, b, c, d] = x;
 
 		a = ff(a, b, c, d, k[0], 7, -680876936);
 		d = ff(d, a, b, c, k[1], 12, -389564586);
@@ -497,7 +501,7 @@
 
 		//catch uncaught exceptions, trace, then exit normally
 		process.on("uncaughtException", e => {
-			log("Uncaught Exception...");
+			print("Uncaught Exception...");
 			error(e.stack);
 			process.emit("cleanup");
 			process.exit(99);

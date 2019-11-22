@@ -33,7 +33,7 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 - [getCurrentDateTime](#getCurrentDateTime())
 - [sha256](#sha256(message)-&&-sha384(message)-&&-sha512(message))
 - [MD5](#MD5(message))
-- [log](#log(Objet)-&&-error(Objet))
+- [print](#print(Objet)-&&-error(Objet))
 - [Fonctions Maths](#Fonctions-Maths(max,-min,-pow,-floor,-ceil,-abs,-sqrt))
 - [ask](#ask(Options))
 - [$ (JQuery)](#$(htmlElement))
@@ -405,7 +405,7 @@ oTime //? => "2019-04-08 17:31:47"
 ```javascript
 const msg = 'password';
 const sha = [sha256, sha384, sha512];
-Promise.all(sha.map(o => o(msg))).then(log);
+Promise.all(sha.map(o => o(msg))).then(print);
 /*
 [
     "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
@@ -424,12 +424,13 @@ const hashMd = MD5('password');
 hashMd //? => 5f4dcc3b5aa765d61d8327deb882cf99
 ```
 
-### log(Objet) && error(Objet)
+### print(Objet) && error(Objet)
 
 #### Wrapper de console
 
 ```javascript
-log("Some amazing text !");
+// Wrapper de console.log
+print("Some amazing text !");
 error("Something wrong...");
 ```
 
@@ -438,6 +439,9 @@ error("Something wrong...");
 #### Wrapper de diverses fonctions de Math
 
 ```javascript
+max([ 8, 3, 1, 3, 0 ]); //? => 8
+min([ 8, 3, 1, 3, 0 ]); //? => 0
+
 max(0, 5, 2); //? => 5
 min(0, 5, 2); //? => 0
 pow(2, 3);    //? => 8
@@ -445,6 +449,7 @@ floor(2.635); //? => 2
 ceil(2.443);  //? => 3
 abs(-23);     //? => 23
 sqrt(9);      //? => 3
+log(10);      //? => 2.30
 ```
 
 ### ask(Options)
@@ -494,11 +499,11 @@ h1.show();
 #### Permet d'attacher une fonction lors que l'arrêt d'un processus NodeJS
 
 ```javascript
-const { log, map, cleanup } = require("../ToolboxModule");
+const { print, map, cleanup } = require("../ToolboxModule");
 //..
 cleanup(_ => {
     //Saving files...
-    log("Closing !");
+    print("Closing !");
 });
 ```
 
