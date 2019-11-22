@@ -43,6 +43,9 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 - [defineControlledProperty](#defineControlledProperty(objet,-nom_propriete,-valeur_initial,-check_function))
 - [arrayEqual](#arrayEqual(arr1,-arr2))
 - [colourNameToHex](#colourNameToHex(colour)-&&-colorNameToHex(color))
+- [sum](#sum(tableau))
+- [mean](#mean(tableau))
+- [stddev](#stddev(tableau))
 
 ## Documentation des fonctions
 
@@ -579,6 +582,36 @@ hex //? => '#7fffd4'
 //...
 const hex = colourNameToHex('blda');
 hex //? => false
+```
+
+### sum(tableau)
+
+#### Renvoie la somme des valeurs dans le tableau
+
+```javascript
+const tab = [ 2, 1, 1, 3, 7, 4, 1, 8, 0, 0 ];
+const total = sum(tab);
+total //? => 27
+```
+
+### mean(tableau)
+
+#### Renvoie la moyenne des valeurs dans le tableau
+
+```javascript
+const tab = [ 2, 1, 1, 3, 7, 4, 1, 8, 0, 0 ];
+const mu = mean(tab);
+mu //? => 2.7
+```
+
+### stddev(tableau)
+
+#### Renvoie l'écart-type des valeurs dans le tableau
+
+```javascript
+const tab = [ 2, 1, 1, 3, 7, 4, 1, 8, 0, 0 ];
+const sd = stddev(tab);
+sd //? => 7.21
 ```
 
 ## License

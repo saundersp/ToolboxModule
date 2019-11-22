@@ -700,4 +700,27 @@
 		return false;
 	};
 
+	exports.sum = arr => {
+		if (!Array.isArray(arr))
+			throw "arr() is only compatible with arrays";
+		else
+			return arr.reduce((t, o) => t + o, 0);
+	};
+
+	exports.mean = arr => {
+		if (!Array.isArray(arr))
+			throw "mean() is only compatible with arrays";
+		else
+			return sum(arr) / arr.length;
+	};
+
+	exports.stddev = arr => {
+		if (!Array.isArray(arr))
+			throw "stddev() is only compatible with arrays";
+		else {
+			const mu = mean(arr);
+			return this.sum(arr.map(v => this.pow(v - mu, 2))) / arr.length;
+		}
+	};
+
 })(typeof exports == "undefined" ? typeof window == "undefined" ? self : window : exports);
