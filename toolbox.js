@@ -157,7 +157,7 @@
 		return a;
 	};
 
-	exports.isAudio = l => /\.(mp3|ogg|wav)$/.test(l);
+	exports.isAudio = l => /\.(mp3|ogg|wav|flac|wma|aac)$/.test(l.trim().toLowerCase());
 
 	exports.getCurrentDateTime = _ => {
 		const c = new Date(),

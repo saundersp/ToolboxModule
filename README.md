@@ -381,7 +381,7 @@ const jump_sound = loadAudio('./music/jumping.ogg', { volume: 0.5 });
 
 #### Utilise un expression régulière pour tester si le lien donne un fichier audio
 
-##### Note: fonctionne sur les fichiers mp3, ogg et wav
+##### Note: fonctionne sur les fichiers mp3, ogg, wav, wma, flac et aac
 
 ```javascript
 if(isAudio(link)){
