@@ -520,6 +520,50 @@
 			this.img = undefined;
 		}
 
+		get x() {
+			return this.x;
+		}
+
+		set x(v) {
+			if (isNaN(v))
+				throw 'x proprerty accept numbers only';
+			else
+				this.x = v;
+		}
+
+		get y() {
+			return this.y;
+		}
+
+		set y(v) {
+			if (isNaN(v))
+				throw 'y proprerty accept numbers only';
+			else
+				this.y = v;
+		}
+
+		get w() {
+			return this.w;
+		}
+
+		set w(v) {
+			if (isNaN(v))
+				throw 'w proprerty accept numbers only';
+			else
+				this.w = v;
+		}
+
+		get h() {
+			return this.h;
+		}
+
+		set h(v) {
+			if (isNaN(v))
+				throw 'h proprerty accept numbers only';
+			else
+				this.h = v;
+		}
+
 		draw(ctx) {
 			ctx.save();
 			ctx.translate(this.x, this.y);
