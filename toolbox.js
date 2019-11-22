@@ -515,10 +515,10 @@
 
 	class Rectangle {
 		constructor(_x = 0, _y = 0, _w = 0, _h = 0, _c = 'black') {
-			this.x = _x;
-			this.y = _y;
-			this.w = _w;
-			this.h = _h;
+			this._x = _x;
+			this._y = _y;
+			this._w = _w;
+			this._h = _h;
 			this.c = _c;
 
 			//Image placeholder
@@ -526,47 +526,47 @@
 		}
 
 		get x() {
-			return this.x;
+			return this._x;
 		}
 
 		set x(v) {
 			if (isNaN(v))
 				throw 'x proprerty accept numbers only';
 			else
-				this.x = v;
+				this._x = v;
 		}
 
 		get y() {
-			return this.y;
+			return this._y;
 		}
 
 		set y(v) {
 			if (isNaN(v))
 				throw 'y proprerty accept numbers only';
 			else
-				this.y = v;
+				this._y = v;
 		}
 
 		get w() {
-			return this.w;
+			return this._w;
 		}
 
 		set w(v) {
 			if (isNaN(v))
 				throw 'w proprerty accept numbers only';
 			else
-				this.w = v;
+				this._w = v;
 		}
 
 		get h() {
-			return this.h;
+			return this._h;
 		}
 
 		set h(v) {
 			if (isNaN(v))
 				throw 'h proprerty accept numbers only';
 			else
-				this.h = v;
+				this._h = v;
 		}
 
 		draw(ctx) {
