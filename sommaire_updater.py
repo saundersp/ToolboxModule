@@ -15,4 +15,4 @@ with open('README.md', "r") as readme:
         for fnc in lines:
             header = fnc[4:-1].replace(' ', '-')
             trunc = header[:header.index('(')]
-            out.write(f"- [{trunc}](#{header})\n")
+            out.write(f"- [{trunc}](###{header})\n")
