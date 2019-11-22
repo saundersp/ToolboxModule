@@ -11,6 +11,7 @@
 	exports.pow = Math.pow;
 	exports.floor = Math.floor;
 	exports.ceil = Math.ceil;
+	exports.round = (n, prec = 1) => Math.round(n * pow(10, prec)) / pow(10, prec);
 	exports.abs = Math.abs;
 	exports.sqrt = Math.sqrt;
 
@@ -75,7 +76,7 @@
 			max = min;
 			min = 0;
 		}
-		return Math.floor(randomFloat(min, max));
+		return floor(randomFloat(min, max));
 	};
 
 	exports.randomFloat = (min, max) => {
@@ -89,26 +90,17 @@
 		return min + Math.random() * (max - min);
 	};
 
-	let previous = false;
-	let y2 = 0;
-	exports.randomGaussian = (mean = 0, sd = 1) => {
-		let y1;
-		if (previous) {
-			y1 = y2;
-			previous = false;
-		} else {
-			let x1, x2, w = Infinity;
-			do {
-				x1 = exports.randomFloat(2.0) - 1;
-				x2 = exports.randomFloat(2.0) - 1;
-				w = x1 * x1 + x2 * x2;
-			} while (w >= 1);
-			w = sqrt(-2 * Math.log(w) / w);
-			y1 = x1 * w;
-			y2 = x2 * w;
-			previous = true;
-		}
-		return y1 * sd + mean;
+	exports.randomNormal = (mean = 0, sd = 1) => {
+		let s, u, v;
+
+		do {
+			u = randomFloat(-1, 1);
+			v = randomFloat(-1, 1);
+			s = pow(u, 2) + pow(v, 2);
+		} while (s >= 1);
+
+		const norm = u * sqrt(-2 * Math.log(s) / s);
+		return sd * norm + mean;
 	};
 
 	exports.removeFromArray = (t, o) => {

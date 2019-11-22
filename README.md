@@ -21,7 +21,7 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 - [trackKeys](###trackKeys(keys[]))
 - [random](###random(min,-max)-||-random(max)-||-random(tableau))
 - [randomFloat](###randomFloat(min,-max)-||-randomFloat(max))
-- [randomGaussian](###randomGaussian(moyenne,-déviation))
+- [randomNormal](###randomNormal(moyenne,-déviation))
 - [removeFromArray](###removeFromArray(array,-obj))
 - [generateArray](###generateArray(...size))
 - [delay](###delay(n))
@@ -47,6 +47,7 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 - [mean](###mean(tableau))
 - [stddev](###stddev(tableau))
 - [rangeArray](###rangeArray(tableau))
+- [round](###round(float,_n))
 
 ## Documentation des fonctions
 
@@ -272,15 +273,15 @@ n //? => un chiffre dans [50.0 et 100.0[
 k //? => un chiffre entre [0.0 et 20.0[
 ```
 
-### randomGaussian(moyenne, déviation)
+### randomNormal(moyenne, déviation)
 
-#### Donne un nombre Gaussian
+#### Donne un nombre tirée d'une distribution normal
 
 ##### Paramètre optionnel = { moyenne: 0, déviation: 1 }
 
 ```javascript
-const n = randomGaussian(50.0, 100.0);
-n //? => nombre aléatoire gaussian
+const n = randomNormal(50.0, 100.0);
+n //? => nombre aléatoire normal
 ```
 
 ### removeFromArray(array, obj)
@@ -627,6 +628,15 @@ sd //? => 7.21
 const tab = [ 2, 1, 1, 3, 7, 4, 1, 8, 0, 0 ];
 const interval = rangeArray(tab);
 interval //? => [ 0, 8 ]
+```
+
+### round(float, n)
+
+#### Renvoie un float avec la précision n
+
+```javascript
+round(Math.PI, 2) //? => 3.14
+round(Math.PI, 4) //? => 3.1416
 ```
 
 ## License
