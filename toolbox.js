@@ -584,7 +584,7 @@
                 v = nv;
             }
         });
-        cf(nv);
+        cf(v);
     };
 
     exports.arrayEqual = (t1, t2) => {
