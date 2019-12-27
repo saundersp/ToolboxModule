@@ -18,7 +18,7 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 - [collision](###collision(object1,-object2)-||-collision(object1,-object[]))
 - [constrain](###constrain(n,-min,-max))
 - [range](###range(n))
-- [trackKeys](###trackKeys(keys[]))
+- [trackKeys](###trackKeys(html_element,-keys[]))
 - [random](###random(min,-max)-||-random(max)-||-random(tableau))
 - [randomFloat](###randomFloat(min,-max)-||-randomFloat(max))
 - [randomNormal](###randomNormal(moyenne,-déviation))
@@ -214,15 +214,15 @@ const t = range(5);
 t //? => [0, 1, 2, 3, 4]
 ```
 
-### trackKeys(keys[])
+### trackKeys(html_element, keys[])
 
 #### Renvoie un tableau des touches pressées à chaque moment
 
-##### Note: s'attache à document.onkeydown et document.onkeyup
+##### Note: s'attache à html_element.onkeydown et html_element.onkeyup
 
 ```javascript
 // binding key events
-const keyInput = trackKeys([
+const keyInput = trackKeys(document, [
     //Moving sideways
     "ArrowLeft", "KeyA",
     "ArrowRight", "KeyD",
@@ -411,7 +411,7 @@ Promise.all(sha.map(o => o(msg))).then(log);
 /*
 [
     "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-        "a8b64babd0aca91a59bdbb7761b421d4f2bb38280d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7",
+    "a8b64babd0aca91a59bdbb7761b421d4f2bb38280d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7",
     "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86"
 ]
 */
@@ -532,7 +532,11 @@ brick.draw(ctx);
 //...
 
 const player = new Rectangle(0, 0, 50, 100, 'yellow');
+
 loadImage(player, "./images/player.png");
+// OR
+player.loadImage("./images/player.png");
+
 //...
 //Si l'image est chargé, dessine player.png
 player.draw(ctx);
@@ -548,10 +552,10 @@ player.draw(ctx);
 class Player(){
     constructor(x, y){
         defineControlledProperty(this, 'x', x, nx => {
-            if(isNan(nx) || nx < 0) throw 'Incorrect X !';
+            if(isNaN(nx) || nx < 0) throw 'Incorrect X !';
         });
         defineControlledProperty(this, 'y', y, ny => {
-            if(isNan(ny) || ny < 0) throw 'Incorrect Y !';
+            if(isNaN(ny) || ny < 0) throw 'Incorrect Y !';
         });
     }
     //...
