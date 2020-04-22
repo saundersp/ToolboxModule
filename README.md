@@ -643,6 +643,26 @@ round(Math.PI, 2) //? => 3.14
 round(Math.PI, 4) //? => 3.1416
 ```
 
+### encodeHTML(string)
+
+#### Renvoie une chaîne de charactère dont les charactéres HTML sont encodées
+
+```javascript
+const str = "<a href='localhost:8080?query=dataset&page=3' id=\"useful_link\">Link</a>";
+const res = encodeHTML(str);
+str //? => "&lt;a href=&#39;localhost:8080?query=dataset&amp;page=3&#39; id=&quot;useful_link&quot;&gt;Link&lt;/a&gt;"
+```
+
+### decodeHTML(string)
+
+#### Décode une chaîne de charactère HTML dont les charactéres HTML sont était encodées
+
+```javascript
+const str = "&lt;a href=&#39;localhost:8080?query=dataset&amp;page=3&#39; id=&quot;useful_link&quot;&gt;Link&lt;/a&gt;";
+const res = decodeHTML(str);
+str //? => "<a href='localhost:8080?query=dataset&page=3' id=\"useful_link\">Link</a>"
+```
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
