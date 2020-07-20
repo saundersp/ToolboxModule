@@ -1,18 +1,19 @@
 import os
+from re import sub
 
-with open('README.md', "r") as readme:
+def getHeaders():
+	lines = []
+	with open('README.md', "r") as readme:
+		for line in readme.readlines():
+			if '### ' in line and not '####' in line and not '#####' in line:
+				lines.append(line)
 
-    lines = []
-    line = readme.readline()
-    
-    while line:
-        if '### ' in line and not '####' in line and not '#####' in line:
-            lines.append(line)
-        line = readme.readline()
+	with open('TEMP.md', 'w') as out:
+		for fnc in lines:
+			trunc = fnc[fnc.index(' ') + 1:]
+			header = trunc[:trunc.index('(')].rstrip()
+			link = sub('\(|\)|,|\.|\[|\]|\||&', '', trunc.replace(' ', '-'))[:-1].lower()
+			out.write(f"- [{header}](#{link})\n")
 
-    with open('TEMP.md', 'w') as out:
-
-        for fnc in lines:
-            header = fnc[4:-1].replace(' ', '-')
-            trunc = header[:header.index('(')]
-            out.write(f"- [{trunc}](###{header})\n")
+if __name__ == '__main__':
+	getHeaders()
