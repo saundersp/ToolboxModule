@@ -21,7 +21,7 @@ Un module NodeJS incluant plusieurs fonctions réutilisables pour des projets di
 - [trackKeys](#trackkeyshtml_element-keys)
 - [random](#randommin-max--randommax--randomtableau)
 - [randomFloat](#randomfloatmin-max--randomfloatmax)
-- [randomNormal](#randomnormalmoyenne-d�viation)
+- [randomNormal](#randomnormalmoyenne-déviation)
 - [removeFromArray](#removefromarrayarray-obj)
 - [generateArray](#generatearraysize)
 - [delay](#delayn)
