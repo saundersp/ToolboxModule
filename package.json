@@ -1,11 +1,14 @@
 {
 	"name": "toolbox",
 	"version": "1.0.0",
-	"description": "A list of short js command to fasten develeopment",
+	"description": "A list of short js command to fasten development",
 	"main": "toolbox.min.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"minify": "minify toolbox.js > toolbox-min.js"
 	},
 	"author": "Pierre Saunders",
-	"license": "MIT"
+	"license": "MIT",
+	"dependencies": {
+		"minify": "^11.4.0"
+	}
 }
