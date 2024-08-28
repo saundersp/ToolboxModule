@@ -9,6 +9,6 @@
 	"author": "Pierre Saunders",
 	"license": "MIT",
 	"dependencies": {
-		"uglify-js": "^3.19.0"
+		"uglify-js": "^3.19.2"
 	}
 }
